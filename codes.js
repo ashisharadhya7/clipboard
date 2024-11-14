@@ -1,89 +1,60 @@
 const pythonCodes = {
-    button1: `Button s;
-    EditText m, ph;
+    button1: `def bit_stuffing(data):
+    stuffed_data = ""
+    count = 0
+    for bit in data:
+        if bit == '1':  
+            count += 1
+            stuffed_data += bit
+        else:
+            count = 0
+            stuffed_data += bit
+        if count == 5:  # Fix the condition to check if count is 5
+            stuffed_data += '0'  # Insert '0' after five consecutive '1's
+            count = 0
+    return stuffed_data
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        m = findViewById(R.id.msg);
-        ph = findViewById(R.id.phone);
-        s = findViewById(R.id.send);
-        s.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String me = m.getText().toString();
-                String p = ph.getText().toString();
-                SmsManager sms = SmsManager.getDefault();
-                sms.sendTextMessage(p,null,me,null,null);
-                Toast.makeText(MainActivity.this, "message sent", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-}`,
+def bit_decoding(stuffed_data):
+    decoded_data = ""
+    count = 0
+    for bit in stuffed_data:
+        if bit == '1':  # Fix the condition to check for '1'
+            count += 1
+            decoded_data += bit
+        else:
+            if count == 5:  # Fix the condition to check if count is 5
+                count = 0
+                continue
+            count = 0
+            decoded_data += bit
+    return decoded_data
 
-    button2: `Button b1,b2,b3,b4;
-    TextView res;
-    EditText n1,n2;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-        n1 = findViewById(R.id.num1);
-        n2 = findViewById(R.id.num2);
-        b1 = findViewById(R.id.add);
-        b2 = findViewById(R.id.sub);
-        b3 = findViewById(R.id.mul);
-        b4 = findViewById(R.id.div);
-        res = findViewById(R.id.t1);
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int a1 = Integer.parseInt(n1.getText().toString());
-                int a2 = Integer.parseInt(n2.getText().toString());
-                int result = a1 + a2;
-                res.setText("Result:" +result);
-            }
-        });
-        b2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int a1 = Integer.parseInt(n1.getText().toString());
-                int a2 = Integer.parseInt(n2.getText().toString());
-                int result = a1 - a2;
-                res.setText("Result:" +result);
-            }
-        });
-        b3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int a1 = Integer.parseInt(n1.getText().toString());
-                int a2 = Integer.parseInt(n2.getText().toString());
-                int result = a1 * a2;
-                res.setText("Result:" +result);
-            }
-        });
-        b4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int a1 = Integer.parseInt(n1.getText().toString());
-                int a2 = Integer.parseInt(n2.getText().toString());
-                if (a2 == 0) {
-                    res.setText("Cannot divide by 0");
-                }
-                else {
-                    int result = a1 / a2;
-                    res.setText("Result:" + result);
-                }
-            }
-        });
+data = input("Enter the data (binary string): ")
+stuffed_data = bit_stuffing(data)
+print("Data after bit stuffing:", stuffed_data)
+decoded_data = bit_decoding(stuffed_data)
+print("Data after bit decoding:", decoded_data)`,
 
-    }
-}
+    button2: `def sender():
+    res = ""
+    n = int(input("Enter number of frames: "))
+    for i in range(n):
+        frame = input(f"Enter frame {i + 1}: ")
+        res += f"{len(frame)}{frame}"
+    print(f"The final message is: {res}")
+    return res
 
-Calculator`,
+def receiver(res):
+    i = 0
+    print("Received frames:")
+    while i < len(res):
+        len_frame = int(res[i])
+        i += 1
+        print(res[i:i + len_frame])
+        i += len_frame
+
+res = sender()
+receiver(res)`,
 
     button3: `RadioGroup r;
 ConstraintLayout ly;
